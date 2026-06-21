@@ -86,7 +86,8 @@ void sprite_init(void) {
     }
 
     /* Copy OAM to hardware immediately */
-    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 3);
+    /* Each ObjAttr is 4 halfwords (8 bytes): attr0, attr1, attr2, padding */
+    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 4);
 }
 
 /* -------------------------------------------------------
@@ -286,16 +287,12 @@ void sprite_update_all(void) {
     }
 
     /* Copy affine matrices and sprite attributes to OAM via DMA
-     * OAM layout: 32 affine matrices (2048 bytes) + 128 sprites (1536 bytes)
-     * Total: 3584 bytes = 1792 halfwords
-     *
-     * We need to copy affine matrices first, then sprite attrs.
-     * Or we can set up a contiguous buffer.
-     *
-     * For simplicity, DMA affine first, then sprites.
+     * GBA OAM at 0x07000000, total 1024 bytes:
+     *   - 32 affine matrices: 32 * 4 halfwords = 256 bytes (0x000-0x0FF)
+     *   - 128 sprite attrs: 128 * 3 halfwords = 768 bytes (0x100-0x3FF)
      */
-    dma_memcpy16((void *)OAM_BASE, oam_affine, 32 * 4);  /* 32 matrices * 4 halfwords */
-    dma_memcpy16((void *)(OAM_BASE + 32 * 4 * 2), oam_buffer, MAX_SPRITES * 3);
+    dma_memcpy16((void *)0x07000000, (const u16 *)oam_affine, 32 * 4);  /* 128 halfwords */
+    dma_memcpy16((void *)0x07000100, (const u16 *)oam_buffer, MAX_SPRITES * 4);  /* 512 halfwords */
 }
 
 /* -------------------------------------------------------
@@ -310,7 +307,7 @@ void sprite_clear_all(void) {
         oam_buffer[i].attr2 = 0;
         oam_buffer[i].padding = 0;
     }
-    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 3);
+    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 4);
 }
 
 /* -------------------------------------------------------

@@ -5,15 +5,16 @@
 
 /* Obstacle definition (used in level data) */
 typedef struct {
-    u8  type;       /* OBS_TYPE_* */
-    u8  axis;       /* 0=horizontal, 1=vertical */
-    s16 x;          /* Base position (pixels) */
+    u8  type;           /* OBS_TYPE_* */
+    u8  move_pattern;   /* OBS_MOVE_LINEAR/CIRCULAR/OSCILLATE */
+    u8  axis;           /* 0=horizontal, 1=vertical */
+    s16 x;              /* Base position (pixels) */
     s16 y;
-    u8  w;          /* Width/height */
+    u8  w;              /* Width/height */
     u8  h;
-    s16 range;      /* Movement range */
-    s16 speed;      /* Movement speed */
-    u8  phase;      /* Phase offset */
+    s16 range;          /* Movement range */
+    s16 speed;          /* Movement speed */
+    u8  phase;          /* Phase offset */
 } ObstacleDef;
 
 /* Checkpoint definition */

@@ -48,6 +48,7 @@
 #include "math_util.h"
 #include "bg_manager.h"
 #include "sprite_manager.h"
+#include "obj_tiles.h"
 #include "particle_system.h"
 #include "text_renderer.h"
 

@@ -17,42 +17,42 @@ typedef struct {
 void timer_display_init(void);
 
 /* -------------------------------------------------------
- *  timer_start — Begin / resume counting
+ *  gt_start — Begin / resume counting
  * ------------------------------------------------------- */
-void timer_start(void);
+void gt_start(void);
 
 /* -------------------------------------------------------
- *  timer_stop — Pause the timer
+ *  gt_stop — Pause the timer
  * ------------------------------------------------------- */
-void timer_stop(void);
+void gt_stop(void);
 
 /* -------------------------------------------------------
- *  timer_reset — Reset to zero and stop
+ *  gt_reset — Reset to zero and stop
  * ------------------------------------------------------- */
-void timer_reset(void);
+void gt_reset(void);
 
 /* -------------------------------------------------------
- *  timer_get_time — Get current elapsed time in centiseconds
+ *  gt_get_time — Get current elapsed time in centiseconds
  * ------------------------------------------------------- */
-u32 timer_get_time(void);
+u32 gt_get_time(void);
 
 /* -------------------------------------------------------
- *  timer_render — Draw the timer to the HUD
+ *  gt_render — Draw the timer to the HUD
  *  x, y: tile position on text layer
  *  color: text color index
  * ------------------------------------------------------- */
-void timer_render(u8 x, u8 y, u8 color);
+void gt_render(u8 x, u8 y, u8 color);
 
 /* -------------------------------------------------------
- *  timer_save_best — Save best time to SRAM for a level
+ *  gt_save_best — Save best time to SRAM for a level
  *  Returns TRUE if new best time.
  * ------------------------------------------------------- */
-bool timer_save_best(u8 level_id, u32 time_cs);
+bool gt_save_best(u8 level_id, u32 time_cs);
 
 /* -------------------------------------------------------
- *  timer_load_best — Load best time from SRAM
+ *  gt_load_best — Load best time from SRAM
  *  Returns 0 if no time saved.
  * ------------------------------------------------------- */
-u32 timer_load_best(u8 level_id);
+u32 gt_load_best(u8 level_id);
 
 #endif /* TIMER_DISPLAY_H */

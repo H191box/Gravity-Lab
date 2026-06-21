@@ -6,9 +6,9 @@
 /* Tiles 24-27: Gold medal (16x16 = 4 tiles) */
 /* Tiles 28-31: Silver medal (16x16 = 4 tiles) */
 /* Tiles 32-35: Bronze medal (16x16 = 4 tiles) */
-#define MEDAL_GOLD_TILE   24
-#define MEDAL_SILVER_TILE 28
-#define MEDAL_BRONZE_TILE 32
+#define MEDAL_GOLD_TILE   OBJ_MEDAL_GOLD
+#define MEDAL_SILVER_TILE OBJ_MEDAL_SILVER
+#define MEDAL_BRONZE_TILE OBJ_MEDAL_BRONZE
 
 /* -------------------------------------------------------
  *  medal_calculate — Compare time against thresholds

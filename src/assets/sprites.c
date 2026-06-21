@@ -24,12 +24,14 @@
  *   12: Gold
  * ============================================================ */
 
-/* OBJ VRAM starts at 0x06010000 (after 64KB BG VRAM)
- * But in 1D mapping mode with CharBase 0, OBJ VRAM is at 0x06010000.
- * Actually for GBA, OBJ tile data starts at byte offset 0x10000 in VRAM
- * when BG layers use CharBase 0 (which uses 0x00000-0x0FFFF).
- * Let's use a simple offset: sprites go right after BG tile data. */
-#define OBJ_VRAM_BASE  ((u16 *)0x06010000)
+/* OBJ VRAM in 1D sprite mapping mode:
+ * Tile index N maps to VRAM address 0x06000000 + N * 32 bytes.
+ * BG CharBase 0 uses tiles 0-511 (0x00000-0x0FFFF = 64KB).
+ * We place OBJ tiles starting at tile 512 to avoid overlap.
+ * VRAM address = 0x06000000 + 512 * 32 = 0x06004000.
+ */
+#define OBJ_VRAM_TILE_START  512
+#define OBJ_VRAM_BASE        ((u16 *)(0x06000000 + OBJ_VRAM_TILE_START * 32))
 
 /* Helper: set pixel in 4bpp sprite tile data */
 static void spr_pixel(u16 *data, u8 x, u8 y, u8 color, u8 tile_w) {

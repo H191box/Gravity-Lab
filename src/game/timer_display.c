@@ -27,7 +27,7 @@ void timer_display_init(void) {
 /* -------------------------------------------------------
  *  timer_start — Begin counting
  * ------------------------------------------------------- */
-void timer_start(void) {
+void gt_start(void) {
     if (game_timer.running) return;
 
     game_timer.running = TRUE;
@@ -41,7 +41,7 @@ void timer_start(void) {
 /* -------------------------------------------------------
  *  timer_stop — Pause the timer
  * ------------------------------------------------------- */
-void timer_stop(void) {
+void gt_stop(void) {
     if (!game_timer.running) return;
 
     /* Save current elapsed time */
@@ -56,7 +56,7 @@ void timer_stop(void) {
 /* -------------------------------------------------------
  *  timer_reset — Reset timer to zero
  * ------------------------------------------------------- */
-void timer_reset(void) {
+void gt_reset(void) {
     game_timer.centiseconds = 0;
     game_timer.running = FALSE;
     game_timer.started = FALSE;
@@ -67,7 +67,7 @@ void timer_reset(void) {
 /* -------------------------------------------------------
  *  timer_get_time — Get elapsed centiseconds
  * ------------------------------------------------------- */
-u32 timer_get_time(void) {
+u32 gt_get_time(void) {
     if (!game_timer.started) return 0;
 
     if (game_timer.running) {
@@ -82,16 +82,16 @@ u32 timer_get_time(void) {
 /* -------------------------------------------------------
  *  timer_render — Draw time as MM:SS.CC
  * ------------------------------------------------------- */
-void timer_render(u8 x, u8 y, u8 color) {
-    u32 cs = timer_get_time();
+void gt_render(u8 x, u8 y, u8 color) {
+    u32 cs = gt_get_time();
     text_draw_time(x, y, cs, color);
 }
 
 /* -------------------------------------------------------
  *  timer_save_best — Save to SRAM if it's a new best
  * ------------------------------------------------------- */
-bool timer_save_best(u8 level_id, u32 time_cs) {
-    u32 old_best = timer_load_best(level_id);
+bool gt_save_best(u8 level_id, u32 time_cs) {
+    u32 old_best = gt_load_best(level_id);
 
     if (old_best == 0 || time_cs < old_best) {
         /* New best time! */
@@ -116,7 +116,7 @@ bool timer_save_best(u8 level_id, u32 time_cs) {
 /* -------------------------------------------------------
  *  timer_load_best — Read best time from SRAM
  * ------------------------------------------------------- */
-u32 timer_load_best(u8 level_id) {
+u32 gt_load_best(u8 level_id) {
     SaveData save;
     if (!save_read(&save)) return 0;
     if (level_id >= MAX_LEVELS) return 0;

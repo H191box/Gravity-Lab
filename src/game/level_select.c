@@ -155,7 +155,7 @@ void level_select_render(void) {
                 }
 
                 /* Medal display */
-                u32 best = timer_load_best(level_idx);
+                u32 best = gt_load_best(level_idx);
                 if (best > 0) {
                     u8 medal = medal_calculate(best, level_idx);
                     const char *medal_name = medal_get_name(medal);

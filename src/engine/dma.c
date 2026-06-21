@@ -16,11 +16,12 @@ static volatile u32 *const dma_dst[4] = {
     (volatile u32 *)0x040000D8,  /* REG_DMA3DAD */
 };
 
+/* DMA control register addresses (lower 16 = count, upper 16 = flags) */
 static volatile u16 *const dma_cnt[4] = {
-    (volatile u16 *)0x040000B8,  /* REG_DMA0CNT */
-    (volatile u16 *)0x040000C4,  /* REG_DMA1CNT */
-    (volatile u16 *)0x040000D0,  /* REG_DMA2CNT */
-    (volatile u16 *)0x040000DC,  /* REG_DMA3CNT */
+    (volatile u16 *)0x040000B8,  /* REG_DMA0CNT_L */
+    (volatile u16 *)0x040000C4,  /* REG_DMA1CNT_L */
+    (volatile u16 *)0x040000D0,  /* REG_DMA2CNT_L */
+    (volatile u16 *)0x040000DC,  /* REG_DMA3CNT_L */
 };
 
 /* -------------------------------------------------------
@@ -29,12 +30,13 @@ static volatile u16 *const dma_cnt[4] = {
 void dma_memcpy(void *dst, const void *src, u32 count, u32 ctrl, int channel) {
     if (channel < 0 || channel > 3) return;
 
-    /* Set source, destination, and count */
+    /* Set source and destination */
     dma_src[channel][0] = (u32)src;
     dma_dst[channel][0] = (u32)dst;
-    /* Count goes in lower 16 bits of control register, control in upper */
+
+    /* Write count to lower 16 bits (DMAxCNT_L), control+enable to upper 16 bits (DMAxCNT_H) */
     dma_cnt[channel][0] = (u16)(count & 0xFFFF);
-    dma_cnt[channel][0] = (u16)ctrl | DMA_ENABLE;
+    dma_cnt[channel][1] = (u16)ctrl | DMA_ENABLE;
 }
 
 /* -------------------------------------------------------
@@ -70,7 +72,8 @@ void dma_memcpy32(void *dst, const void *src, u32 count) {
 void dma_memset(void *dst, u16 val, u32 count) {
     dma_src[DMA_CHANNEL3][0] = (u32)val;
     dma_dst[DMA_CHANNEL3][0] = (u32)dst;
-    dma_cnt[DMA_CHANNEL3][0] = (u16)count | DMA_16BIT | DMA_DST_INC | DMA_SRC_FIXED | DMA_ENABLE;
+    dma_cnt[DMA_CHANNEL3][0] = (u16)count;
+    dma_cnt[DMA_CHANNEL3][1] = DMA_16BIT | DMA_DST_INC | DMA_SRC_FIXED | DMA_ENABLE;
 }
 
 /* -------------------------------------------------------
@@ -79,7 +82,8 @@ void dma_memset(void *dst, u16 val, u32 count) {
 void dma_memset32(void *dst, u32 val, u32 count) {
     dma_src[DMA_CHANNEL3][0] = val;
     dma_dst[DMA_CHANNEL3][0] = (u32)dst;
-    dma_cnt[DMA_CHANNEL3][0] = (u16)count | DMA_32BIT | DMA_DST_INC | DMA_SRC_FIXED | DMA_ENABLE;
+    dma_cnt[DMA_CHANNEL3][0] = (u16)count;
+    dma_cnt[DMA_CHANNEL3][1] = DMA_32BIT | DMA_DST_INC | DMA_SRC_FIXED | DMA_ENABLE;
 }
 
 /* -------------------------------------------------------

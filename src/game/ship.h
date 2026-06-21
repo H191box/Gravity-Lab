@@ -21,7 +21,7 @@
 #define SHIP_TRAIL_LENGTH   12     /* Number of trail positions */
 
 /* Ship sprite data */
-#define SHIP_SPRITE_TILE    0      /* First tile of ship sprite (16x16 = 4 tiles) */
+#define SHIP_SPRITE_TILE    OBJ_SHIP_CENTER  /* First tile of ship sprite (16x16 = 4 tiles) */
 #define SHIP_SPRITE_PAL     0      /* OBJ palette bank */
 #define SHIP_SPRITE_PRI     2      /* Priority (above BG1 walls) */
 

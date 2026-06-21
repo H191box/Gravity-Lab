@@ -1,108 +1,100 @@
-# Gravity Lab - GBA Racing Puzzle Game
-# Makefile for devkitARM
+# ============================================================
+#  Gravity Lab - GBA Racing Puzzle Game
+#  Makefile for devkitARM (devkitPro)
+#
+#  PATRÓN basado en H191box/gems — usa gba.specs de devkitPro
+#  que maneja automáticamente: ROM header, entry stub ARM→Thumb,
+#  BSS zeroing, .data copy, e IRQ/VBlank init via libgba.
+# ============================================================
 
-# Toolchain
-CC      = arm-none-eabi-gcc
-AS      = arm-none-eabi-as
-OBJCOPY = arm-none-eabi-objcopy
+# --- Toolchain (devkitPro) ---
+DEVKITPRO ?= /opt/devkitpro
+DEVKITARM ?= $(DEVKITPRO)/devkitARM
+LIBGBA    ?= $(DEVKITPRO)/libgba
 
-# devkitARM paths
-LIBGBA  := $(shell $(CC) -print-file-name=libgba.a)
-LIBC    := $(shell $(CC) -print-file-name=libc.a)
+CC      := $(DEVKITARM)/bin/arm-none-eabi-gcc
+OBJCOPY := $(DEVKITARM)/bin/arm-none-eabi-objcopy
 
-# Project paths
+# --- Project paths ---
 SRCDIR  = src
 BUILDDIR = build
 TARGET  = gravity_lab
 
-# Source files
-C_SRCS  = $(wildcard $(SRCDIR)/main/*.c) \
-          $(wildcard $(SRCDIR)/engine/*.c) \
-          $(wildcard $(SRCDIR)/game/*.c) \
-          $(wildcard $(SRCDIR)/assets/*.c) \
-          $(wildcard $(SRCDIR)/data/*.c)
+# --- Sources ---
+SOURCES := $(wildcard $(SRCDIR)/main/*.c) \
+           $(wildcard $(SRCDIR)/engine/*.c) \
+           $(wildcard $(SRCDIR)/game/*.c) \
+           $(wildcard $(SRCDIR)/assets/*.c) \
+           $(wildcard $(SRCDIR)/data/*.c)
 
-# Object files
-C_OBJS  = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(C_SRCS))
+OBJECTS := $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(SOURCES))
 
-# GBA header object (minimal GBA ROM header)
-HEADER_OBJ = $(BUILDDIR)/gba_header.o
+# --- Output ---
+ROM = $(TARGET).gba
 
-# All objects
-OBJS = $(HEADER_OBJ) $(C_OBJS)
+# -------------------------------------------------------
+#  COMPILER FLAGS
+#  -mcpu=arm7tdmi: target GBA CPU exactly
+#  -ffunction-sections -fdata-sections: dead code elimination
+# -------------------------------------------------------
+CFLAGS := \
+	-mthumb \
+	-mthumb-interwork \
+	-mcpu=arm7tdmi \
+	-O2 \
+	-ffunction-sections \
+	-fdata-sections \
+	-fno-common \
+	-I$(LIBGBA)/include \
+	-I$(SRCDIR) \
+	-Iinclude \
+	-Wall -Wextra \
+	-std=c99
 
-# Output
-ELF  = $(BUILDDIR)/$(TARGET).elf
-ROM  = $(BUILDDIR)/$(TARGET).gba
+# -------------------------------------------------------
+#  LINKER FLAGS
+#  CRÍTICO: -specs=gba.specs maneja todo el boot:
+#    - ROM header (Nintendo logo, entry point)
+#    - ARM→Thumb stub
+#    - .data ROM→EWRAM copy
+#    - .bss zeroing
+#    - Stack pointer setup
+#  -lgba: proporciona IRQ handlers, VBlank, etc.
+# -------------------------------------------------------
+LDFLAGS := \
+	-mthumb \
+	-mthumb-interwork \
+	-mcpu=arm7tdmi \
+	-specs=gba.specs \
+	-L$(LIBGBA)/lib \
+	-lgba \
+	-Wl,--gc-sections \
+	-Wl,-Map,$(BUILDDIR)/$(TARGET).map
 
-# Compiler flags
-CFLAGS  = -mthumb-interwork -mthumb -O2 -Wall -Wextra \
-          -I$(SRCDIR) -Iinclude \
-          -ffreestanding -nostdlib -std=c99
+# -------------------------------------------------------
+#  BUILD RULES
+# -------------------------------------------------------
+all: $(BUILDDIR) $(ROM)
 
-ASFLAGS = -mthumb-interwork -mthumb
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
-LDFLAGS = -mthumb-interwork -mthumb -T linker.ld \
-          -nostdlib -lgba $(LIBGBA)
+$(ROM): $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $(BUILDDIR)/$(TARGET).elf $(OBJECTS)
+	$(OBJCOPY) -O binary $(BUILDDIR)/$(TARGET).elf $(ROM)
+	@echo "=== ROM built: $(ROM) ==="
+	@ls -la $(ROM)
 
-# Default target
-all: $(ROM)
-
-# Link ELF
-$(ELF): $(OBJS) linker.ld
-	@mkdir -p $(dir $@)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBGBA)
-
-# Copy to GBA ROM
-$(ROM): $(ELF)
-	$(OBJCOPY) -O binary $< $@
-	@echo "=== ROM built: $@ ==="
-	@ls -la $@
-
-# Compile C sources
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-# GBA header (fixed ROM entry point)
-$(HEADER_OBJ): $(BUILDDIR)/gba_header.s
-	$(AS) $(ASFLAGS) -o $@ $<
-
-$(BUILDDIR)/gba_header.s:
-	@mkdir -p $(dir $@)
-	@echo '.section .rom_header' > $@
-	@echo '.word 0x24000000' >> $@       # GBA ROM entry point
-	@echo '.word 0x00000000' >> $@       # Logo (placeholder)
-	@echo '.ascii "GRAVLAB  "' >> $@     # Game title
-	@echo '.word 0x00000000' >> $@       # Game code
-	@echo '.word 0x00000000' >> $@       # Maker code
-	@echo '.byte 0x96' >> $@             # Fixed value
-	@echo '.byte 0x00' >> $@             # Main unit code
-	@echo '.byte 0x00' >> $@             # Device type
-	@echo '.byte 0x07' >> $@             # Reserved
-	@echo '.byte 0x00' >> $@             # Software version
-	@echo '.byte 0x00' >> $@             # Complement check
-	@echo '.word 0x00000000' >> $@       # Reserved
-
-# Create linker script
-linker.ld:
-	@echo "OUTPUT_ARCH(arm)" > $@
-	@echo "ENTRY(_start)" >> $@
-	@echo "SECTIONS {" >> $@
-	@echo "  . = 0x08000000;" >> $@
-	@echo "  .text : { *(.rom_header) *(.text .text.*) }" >> $@
-	@echo "  .rodata : { *(.rodata .rodata.*) }" >> $@
-	@echo "  .data : { *(.data .data.*) }" >> $@
-	@echo "  .bss : { *(.bss .bss.*) __bss_end = .; }" >> $@
-	@echo "  . = 0x0E000000;" >> $@
-	@echo "  .sram (NOLOAD) : { *(.sram .sram.*) }" >> $@
-	@echo "}" >> $@
-
-# Clean
+# -------------------------------------------------------
+#  UTILITIES
+# -------------------------------------------------------
 clean:
-	rm -rf $(BUILDDIR)
+	rm -rf $(BUILDDIR) $(ROM)
 
-# Rebuild
 rebuild: clean all
 
 .PHONY: all clean rebuild

@@ -83,7 +83,7 @@ void game_change_state(u8 new_state) {
         case STATE_PLAYING:
         case STATE_EXPLODING:
             /* Stop timer */
-            timer_stop();
+            gt_stop();
             /* Clear game objects */
             obstacle_clear();
             particle_clear_all();
@@ -122,7 +122,7 @@ void game_change_state(u8 new_state) {
 
         case STATE_PAUSED:
             pause_blink = 0;
-            timer_stop();
+            gt_stop();
             break;
     }
 }
@@ -156,8 +156,8 @@ void game_start_level(u8 level_id) {
     hud_init();
 
     /* Reset and start timer */
-    timer_reset();
-    timer_start();
+    gt_reset();
+    gt_start();
 
     /* Change to playing state */
     game_state = STATE_PLAYING;
@@ -233,10 +233,10 @@ void game_update(void) {
                 u8 finish_tile = circuit_get_tile(ship_wx, ship_wy);
                 if (finish_tile == TILE_FINISH) {
                     /* Level complete! */
-                    completion_time = timer_get_time();
-                    timer_stop();
+                    completion_time = gt_get_time();
+                    gt_stop();
                     completion_medal = medal_calculate(completion_time, pending_level);
-                    timer_save_best(pending_level, completion_time);
+                    gt_save_best(pending_level, completion_time);
                     game_change_state(STATE_COMPLETE);
                     break;
                 }
@@ -304,7 +304,7 @@ void game_update(void) {
             pause_blink++;
             if (key_just_pressed(KEY_START) || key_just_pressed(KEY_B)) {
                 game_state = STATE_PLAYING;
-                timer_start();
+                gt_start();
             }
             if (key_just_pressed(KEY_SELECT)) {
                 /* Quit to level select */
@@ -401,7 +401,7 @@ void game_render(void) {
             }
 
             /* Best time */
-            u32 best = timer_load_best(pending_level);
+            u32 best = gt_load_best(pending_level);
             text_draw(5, 11, "BEST:", TEXT_COLOR_WHITE);
             if (best > 0) {
                 text_draw_time(11, 11, best, TEXT_COLOR_CYAN);

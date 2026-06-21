@@ -29,16 +29,8 @@
 #define CIRCUIT_MAX_HEIGHT  64   /* Max tiles tall */
 #define CIRCUIT_MAX_TILES   (CIRCUIT_MAX_WIDTH * CIRCUIT_MAX_HEIGHT)
 
-/* Level data structure */
-typedef struct {
-    const u8 *tile_map;         /* Tile IDs: width * height bytes */
-    u8  width;                  /* Width in tiles */
-    u8  height;                 /* Height in tiles */
-    s16 start_x;                /* Start position in pixels */
-    s16 start_y;
-    u8  start_angle;            /* Starting ship angle */
-    const char *name;           /* Level name (for display) */
-} LevelData;
+/* Forward declaration — LevelData is defined in levels.h */
+struct LevelData;
 
 /* Camera position (world coordinates, pixel space) */
 extern s16 camera_x;

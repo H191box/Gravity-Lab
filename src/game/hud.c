@@ -61,7 +61,7 @@ void hud_render(void) {
     text_draw(1, 0, name, TEXT_COLOR_WHITE);
 
     /* Timer (centered at top) */
-    timer_render(10, 0, TEXT_COLOR_YELLOW);
+    gt_render(10, 0, TEXT_COLOR_YELLOW);
 
     /* Checkpoint counter */
     text_draw(22, 0, "CP:", TEXT_COLOR_GREEN);

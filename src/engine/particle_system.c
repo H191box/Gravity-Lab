@@ -19,23 +19,29 @@ void particle_init(void) {
     }
 
     /* Define tile indices for each particle type
-     * These correspond to sprite tiles loaded in VRAM.
+     * These correspond to OBJ tile data starting at OBJ_TILE_BASE.
      * Layout in OBJ tile data:
-     *   Tile 0-1: Ship (16x16 = 4 tiles, but ship uses affine so 4 tiles)
-     *   Tile 4-7: Explosion frame (16x16 = 4 tiles)
-     *   Tile 8: Spark (8x8)
-     *   Tile 9: Glow (8x8)
-     *   Tile 10: Smoke (8x8)
-     *   Tile 11: Checkpoint flag (8x8)
-     *   Tile 12-15: Medal sprites (16x16 each = 4 tiles)
+     *   Tile 0-3:   Ship center (16x16)
+     *   Tile 4-7:   Ship left tilt
+     *   Tile 8-11:  Ship right tilt
+     *   Tile 12-15: Ship thrust
+     *   Tile 16-19: Explosion fireball
+     *   Tile 20-23: Obstacle bar
+     *   Tile 24-27: Gold medal
+     *   Tile 28-31: Silver medal
+     *   Tile 32-35: Bronze medal
+     *   Tile 36: Spark (8x8)
+     *   Tile 37: Glow (8x8)
+     *   Tile 38: Smoke (8x8)
+     *   Tile 39: Checkpoint flag (8x8)
      */
-    particle_tiles[PARTICLE_EXHAUST]       = 8;   /* 8x8 spark, color 15 (blue) */
-    particle_tiles[PARTICLE_SPARK]         = 8;   /* 8x8 spark, color 4 (yellow) */
-    particle_tiles[PARTICLE_FIRE]          = 9;   /* 8x8 glow, color 5 (orange) */
-    particle_tiles[PARTICLE_CHECKPOINT]    = 11;  /* 8x8 flag */
-    particle_tiles[PARTICLE_BOOST_GLOW]    = 9;   /* 8x8 glow, color 15 (cyan) */
-    particle_tiles[PARTICLE_SMOKE]         = 10;  /* 8x8 smoke */
-    particle_tiles[PARTICLE_MEDAL_SPARKLE] = 8;   /* 8x8 spark, color 12 (gold) */
+    particle_tiles[PARTICLE_EXHAUST]       = OBJ_PARTICLE_SPARK;      /* 8x8 spark */
+    particle_tiles[PARTICLE_SPARK]         = OBJ_PARTICLE_SPARK;      /* 8x8 spark */
+    particle_tiles[PARTICLE_FIRE]          = OBJ_PARTICLE_GLOW;       /* 8x8 glow */
+    particle_tiles[PARTICLE_CHECKPOINT]    = OBJ_PARTICLE_CHECKPOINT; /* 8x8 flag */
+    particle_tiles[PARTICLE_BOOST_GLOW]    = OBJ_PARTICLE_GLOW;       /* 8x8 glow */
+    particle_tiles[PARTICLE_SMOKE]         = OBJ_PARTICLE_SMOKE;      /* 8x8 smoke */
+    particle_tiles[PARTICLE_MEDAL_SPARKLE] = OBJ_PARTICLE_SPARK;      /* 8x8 spark */
 }
 
 /* -------------------------------------------------------

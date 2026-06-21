@@ -9,6 +9,7 @@ static u8  exp_frame = 0;
 static s16 exp_x = 0;
 static s16 exp_y = 0;
 static int exp_sprite_slot = -1;
+static u16 saved_palette1 = 0;  /* Saved palette for flash restore */
 
 /* -------------------------------------------------------
  *  explosion_start — Begin explosion sequence
@@ -22,9 +23,13 @@ void explosion_start(s16 sx, s16 sy) {
     /* Trigger screen shake */
     shake_start(EXPLOSION_SHAKE_INTENSITY, EXPLOSION_SHAKE_DURATION);
 
+    /* Save palette and start flash */
+    saved_palette1 = BG_PALETTE[1];
+    BG_PALETTE[1] = 0x7FFF;  /* White flash on frame 0 */
+
     /* Allocate explosion sprite (16x16 fireball) */
     if (exp_sprite_slot < 0) {
-        exp_sprite_slot = sprite_alloc(16, 16, 4, 0, 0);  /* Tile 4-7, pal 0, priority 0 */
+        exp_sprite_slot = sprite_alloc(16, 16, OBJ_EXPLOSION, 0, 0);  /* Fireball sprite */
     }
 }
 
@@ -96,12 +101,9 @@ void explosion_render(void) {
      * This function can add extra effects if needed. */
 
     if (exp_active && exp_frame <= EXPLOSION_FIREBALL_DUR) {
-        /* Flash effect: briefly invert colors using palette tricks */
-        if (exp_frame <= 2) {
-            /* Flash the BG palette brighter for 2 frames */
-            u16 temp = BG_PALETTE[1];
-            BG_PALETTE[1] = 0x7FFF;  /* Pure white flash */
-            BG_PALETTE[1] = temp;    /* Restore immediately */
+        /* Restore palette after 2 frames of flash */
+        if (exp_frame == 2) {
+            BG_PALETTE[1] = saved_palette1;
         }
     }
 }

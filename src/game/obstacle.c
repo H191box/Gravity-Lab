@@ -45,9 +45,9 @@ void obstacle_init(u8 level_id) {
         /* Allocate sprite for obstacle */
         int slot = -1;
         if (obs->type == OBS_TYPE_BLADE) {
-            slot = sprite_alloc(16, 16, 16, 0, 1);  /* Blade sprite */
+            slot = sprite_alloc(16, 16, OBJ_EXPLOSION, 0, 1);  /* Blade sprite (reuses fireball tile) */
         } else {
-            slot = sprite_alloc(obs->width, obs->height, 20, 0, 1);  /* Bar/wall sprite */
+            slot = sprite_alloc(obs->width, obs->height, OBJ_OBSTACLE_BAR, 0, 1);  /* Bar/wall sprite */
         }
         obs->sprite_slot = (u8)(slot >= 0 ? slot : 0);
         obs->active = 1;
