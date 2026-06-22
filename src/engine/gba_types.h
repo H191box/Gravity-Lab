@@ -415,6 +415,29 @@ typedef struct {
 #endif
 #define BG_PALETTE       ((u16 *)0x05000000)
 
+/* ---- Timer flags (devkitPro uses TIMER_*) ---- */
+#ifndef TM_ENABLE
+#define TM_ENABLE        (1 << 7)
+#endif
+#ifndef TM_IRQ
+#define TM_IRQ           (1 << 6)
+#endif
+#ifndef TM_CASCADE
+#define TM_CASCADE       (1 << 2)
+#endif
+#ifndef TM_FREQ_1
+#define TM_FREQ_1        (0 << 0)
+#endif
+#ifndef TM_FREQ_64
+#define TM_FREQ_64       (1 << 0)
+#endif
+#ifndef TM_FREQ_256
+#define TM_FREQ_256      (2 << 0)
+#endif
+#ifndef TM_FREQ_1024
+#define TM_FREQ_1024     (3 << 0)
+#endif
+
 /* ---- VBlank flag ---- */
 extern volatile u16 vblank_flag;
 
