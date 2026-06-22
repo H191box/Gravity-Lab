@@ -24,9 +24,15 @@ void hud_init(void) {
     hud_initialized = 1;
 
     /* Text layer is already initialized by text_init().
-     * Just set up priority so it renders above game BGs. */
+     * During gameplay, BG3 is kept disabled because BG tiles lack
+     * per-pixel transparency — a text BG at any priority would either
+     * cover the circuit (priority 0) or be hidden behind it (priority 3).
+     * In-game HUD text is not visible; this will be fixed later using
+     * either OBJ-based text or WIN0/1 window regions.
+     * For now, BG3 text works for title/menus/pause (where BG0/1 are off).
+     */
     bg_set_priority(BG_LAYER_UI, 3);
-    bg_enable(BG_LAYER_UI);
+    bg_disable(BG_LAYER_UI);
 }
 
 /* -------------------------------------------------------
