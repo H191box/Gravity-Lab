@@ -38,18 +38,22 @@ ROM = $(TARGET).gba
 #  -ffunction-sections -fdata-sections: dead code elimination
 # -------------------------------------------------------
 CFLAGS := \
-	-mthumb \
-	-mthumb-interwork \
-	-mcpu=arm7tdmi \
-	-O2 \
-	-ffunction-sections \
-	-fdata-sections \
-	-fno-common \
-	-I$(LIBGBA)/include \
-	-I$(SRCDIR) \
-	-Iinclude \
-	-Wall -Wextra \
-	-std=c99
+        -mthumb \
+        -mthumb-interwork \
+        -mcpu=arm7tdmi \
+        -O2 \
+        -ffunction-sections \
+        -fdata-sections \
+        -fno-common \
+        -I$(LIBGBA)/include \
+        -I$(SRCDIR) \
+        -I$(SRCDIR)/engine \
+        -I$(SRCDIR)/game \
+        -I$(SRCDIR)/assets \
+        -I$(SRCDIR)/data \
+        -Iinclude \
+        -Wall -Wextra \
+        -std=c99
 
 # -------------------------------------------------------
 #  LINKER FLAGS
@@ -62,14 +66,14 @@ CFLAGS := \
 #  -lgba: proporciona IRQ handlers, VBlank, etc.
 # -------------------------------------------------------
 LDFLAGS := \
-	-mthumb \
-	-mthumb-interwork \
-	-mcpu=arm7tdmi \
-	-specs=gba.specs \
-	-L$(LIBGBA)/lib \
-	-lgba \
-	-Wl,--gc-sections \
-	-Wl,-Map,$(BUILDDIR)/$(TARGET).map
+        -mthumb \
+        -mthumb-interwork \
+        -mcpu=arm7tdmi \
+        -specs=gba.specs \
+        -L$(LIBGBA)/lib \
+        -lgba \
+        -Wl,--gc-sections \
+        -Wl,-Map,$(BUILDDIR)/$(TARGET).map
 
 # -------------------------------------------------------
 #  BUILD RULES
@@ -77,23 +81,23 @@ LDFLAGS := \
 all: $(BUILDDIR) $(ROM)
 
 $(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+        mkdir -p $(BUILDDIR)
 
 $(ROM): $(OBJECTS)
-	$(CC) $(LDFLAGS) -o $(BUILDDIR)/$(TARGET).elf $(OBJECTS)
-	$(OBJCOPY) -O binary $(BUILDDIR)/$(TARGET).elf $(ROM)
-	@echo "=== ROM built: $(ROM) ==="
-	@ls -la $(ROM)
+        $(CC) $(LDFLAGS) -o $(BUILDDIR)/$(TARGET).elf $(OBJECTS)
+        $(OBJCOPY) -O binary $(BUILDDIR)/$(TARGET).elf $(ROM)
+        @echo "=== ROM built: $(ROM) ==="
+        @ls -la $(ROM)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $<
+        @mkdir -p $(dir $@)
+        $(CC) $(CFLAGS) -c -o $@ $<
 
 # -------------------------------------------------------
 #  UTILITIES
 # -------------------------------------------------------
 clean:
-	rm -rf $(BUILDDIR) $(ROM)
+        rm -rf $(BUILDDIR) $(ROM)
 
 rebuild: clean all
 
