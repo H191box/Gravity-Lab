@@ -23,6 +23,9 @@
 #ifndef VRAM_BASE
 #define VRAM_BASE  0x06000000
 #endif
+#ifndef SRAM_BASE
+#define SRAM_BASE  ((u8 *)0x0E000000)
+#endif
 
 /* ---- Fixed-point type (NOT in devkitPro) ---- */
 typedef s16 fixed;
