@@ -161,8 +161,8 @@ void circuit_render(void) {
     s16 shake_y = shake_get_y();
 
     /* BG0 (floor) and BG1 (walls) scroll together with camera */
-    bg_scroll(BG_LAYER_FLOOR, camera_x + shake_x, camera_y + shake_y);
-    bg_scroll(BG_LAYER_WALLS, camera_x + shake_x, camera_y + shake_y);
+    bg_set_scroll(BG_LAYER_FLOOR, camera_x + shake_x, camera_y + shake_y);
+    bg_set_scroll(BG_LAYER_WALLS, camera_x + shake_x, camera_y + shake_y);
 }
 
 /* -------------------------------------------------------

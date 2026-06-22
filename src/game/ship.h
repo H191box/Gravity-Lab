@@ -50,7 +50,7 @@ typedef struct {
     /* Invincibility timer after respawn */
     u16 invincible_timer;
 
-    /* Sprite slot */
+    /* GameSprite slot */
     int sprite_slot;
 
     /* Trail system: last N positions for exhaust */

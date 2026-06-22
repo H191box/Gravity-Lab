@@ -132,7 +132,7 @@ void text_init(void) {
     };
     bg_configure(text_layer, &text_cfg);
     bg_clear_map(text_layer);
-    bg_scroll(text_layer, 0, 0);
+    bg_set_scroll(text_layer, 0, 0);
 }
 
 /* -------------------------------------------------------

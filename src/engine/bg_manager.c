@@ -149,7 +149,7 @@ void bg_configure(int layer, const BGConfig *cfg) {
     }
 
     /* Set scroll to 0 */
-    bg_scroll(layer, 0, 0);
+    bg_set_scroll(layer, 0, 0);
 }
 
 /* -------------------------------------------------------
@@ -179,7 +179,7 @@ void bg_set_priority(int layer, u8 priority) {
  *  bg_scroll — Set scroll offset for a BG layer
  *  Only lower 9 bits are used by hardware (0-511).
  * ------------------------------------------------------- */
-void bg_scroll(int layer, s16 x, s16 y) {
+void bg_set_scroll(int layer, s16 x, s16 y) {
     if (layer < 0 || layer > 3) return;
 
     /* Store scroll (may be larger than 511 for world coords) */

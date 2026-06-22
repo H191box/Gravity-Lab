@@ -2,7 +2,7 @@
 #include "dma.h"
 
 /* Pool of 128 sprite slots */
-static Sprite sprites[MAX_SPRITES];
+static GameSprite sprites[MAX_SPRITES];
 
 /* OAM buffer — we write here, then DMA to hardware OAM at VBlank */
 static ObjAttr  oam_buffer[MAX_SPRITES];
@@ -232,7 +232,7 @@ void sprite_update_all(void) {
     /* In GBA OAM layout: 32 affine matrices (32*4 words), then 128 sprite attrs (128*3 words) */
     /* We DMA the whole thing: affine first, then sprites */
     for (i = 0; i < MAX_SPRITES; i++) {
-        Sprite *sp = &sprites[i];
+        GameSprite *sp = &sprites[i];
 
         if (sp->state != SPRITE_ACTIVE) {
             /* Disabled sprite */
@@ -313,7 +313,7 @@ void sprite_clear_all(void) {
 /* -------------------------------------------------------
  *  sprite_get — Get sprite info pointer
  * ------------------------------------------------------- */
-Sprite *sprite_get(int slot) {
-    if (slot < 0 || slot >= MAX_SPRITES) return (Sprite *)NULL;
+GameSprite *sprite_get(int slot) {
+    if (slot < 0 || slot >= MAX_SPRITES) return (GameSprite *)NULL;
     return &sprites[slot];
 }

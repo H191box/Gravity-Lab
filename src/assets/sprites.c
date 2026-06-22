@@ -2,7 +2,7 @@
 #include "dma.h"
 
 /* ============================================================
- *  Sprite Graphics Generator
+ *  GameSprite Graphics Generator
  *  All sprites are generated at runtime using pixel primitives.
  *  4bpp format: 8x8 tile = 32 bytes = 16 halfwords
  *  16x16 sprite = 4 tiles = 128 bytes = 64 halfwords

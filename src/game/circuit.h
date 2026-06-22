@@ -29,8 +29,7 @@
 #define CIRCUIT_MAX_HEIGHT  64
 #define CIRCUIT_MAX_TILES   (CIRCUIT_MAX_WIDTH * CIRCUIT_MAX_HEIGHT)
 
-/* Forward declaration — LevelData is a typedef from levels.h */
-typedef struct LevelData LevelData;
+/* LevelData is defined in levels.h (included before this header via gravity_lab.h) */
 
 /* Camera position (world coordinates, pixel space) */
 extern s16 camera_x;

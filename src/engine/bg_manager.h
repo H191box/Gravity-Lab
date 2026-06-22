@@ -45,7 +45,7 @@ void bg_set_priority(int layer, u8 priority);
  *  bg_scroll — Set scroll offset for a layer
  *  x, y: scroll position in pixels (0-511 for 512px maps)
  * ------------------------------------------------------- */
-void bg_scroll(int layer, s16 x, s16 y);
+void bg_set_scroll(int layer, s16 x, s16 y);
 
 /* -------------------------------------------------------
  *  bg_get_scroll — Get current scroll offset

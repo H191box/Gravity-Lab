@@ -53,7 +53,7 @@ CFLAGS := \
 	-I$(SRCDIR)/data \
 	-Iinclude \
 	-Wall -Wextra \
-	-std=c99
+	-std=gnu99
 
 # -------------------------------------------------------
 #  LINKER FLAGS

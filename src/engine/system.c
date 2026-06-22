@@ -137,7 +137,7 @@ void sys_set_default_palette(void) {
     BG_PALETTE[14] = 0x2124;  /* 14: Very dark blue (void) */
     BG_PALETTE[15] = 0x57E0;  /* 15: Light green (finish) */
 
-    /* OBJ Palette 0 — Sprite colors */
+    /* OBJ Palette 0 — GameSprite colors */
     OBJ_PALETTE[0]  = 0x0000;  /* 0: Transparent */
     OBJ_PALETTE[1]  = 0x7FFF;  /* 1: White (ship body) */
     OBJ_PALETTE[2]  = 0x5EBF;  /* 2: Cyan (ship glow) */

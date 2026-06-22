@@ -3,11 +3,11 @@
 
 #include "gba_types.h"
 
-/* Sprite slot states */
+/* GameSprite slot states */
 #define SPRITE_FREE    0
 #define SPRITE_ACTIVE  1
 
-/* Sprite flags */
+/* GameSprite flags */
 #define SPRITE_FLAG_VISIBLE    (1 << 0)
 #define SPRITE_FLAG_AFFINE     (1 << 1)
 #define SPRITE_FLAG_HFLIP      (1 << 2)
@@ -15,10 +15,10 @@
 #define SPRITE_FLAG_MOSAIC     (1 << 4)
 #define SPRITE_FLAG_SIZE_DBL   (1 << 5)  /* Affine double-size */
 
-/* Sprite info (our bookkeeping, separate from OAM) */
+/* GameSprite info (our bookkeeping, separate from OAM) */
 typedef struct {
     u8  state;        /* SPRITE_FREE or SPRITE_ACTIVE */
-    u8  flags;        /* Sprite flags */
+    u8  flags;        /* GameSprite flags */
     u16 tile_id;      /* Starting tile index in VRAM */
     u16 attr2_extra;  /* Palette and priority bits for attr2 */
 
@@ -33,7 +33,7 @@ typedef struct {
 
     /* Affine parameters (only if SPRITE_FLAG_AFFINE) */
     u8  affine_index; /* Affine matrix index (0-31) */
-} Sprite;
+} GameSprite;
 
 /* -------------------------------------------------------
  *  sprite_init — Initialize sprite manager
@@ -111,6 +111,6 @@ void sprite_clear_all(void);
  *  sprite_get — Get pointer to sprite info
  *  Returns NULL if slot is invalid.
  * ------------------------------------------------------- */
-Sprite *sprite_get(int slot);
+GameSprite *sprite_get(int slot);
 
 #endif /* SPRITE_MANAGER_H */

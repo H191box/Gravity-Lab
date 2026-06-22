@@ -3,7 +3,7 @@
 
 #include "gba_types.h"
 
-/* Sprite tile layout in OBJ VRAM:
+/* GameSprite tile layout in OBJ VRAM:
  *   Tiles 0-3:    Ship frame 0 (16x16, normal)
  *   Tiles 4-7:    Ship frame 1 (16x16, tilt left)
  *   Tiles 8-11:   Ship frame 2 (16x16, tilt right)

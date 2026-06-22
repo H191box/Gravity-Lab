@@ -4,7 +4,7 @@
 #include "gba_types.h"
 
 /* ============================================================
- *  OBJ Sprite Tile IDs
+ *  OBJ GameSprite Tile IDs
  *
  *  GBA 1D sprite mapping: tile index N → VRAM 0x06000000 + N*32
  *  BG CharBase 0 occupies tile indices 0-511 (VRAM 0x06000000-0x06003FFF).
