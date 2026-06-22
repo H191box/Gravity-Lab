@@ -2,7 +2,6 @@
 #define SPRITE_MANAGER_H
 
 #include "gba_types.h"
-#include "gba_header.h"
 
 /* Sprite slot states */
 #define SPRITE_FREE    0

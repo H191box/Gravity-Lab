@@ -15,20 +15,20 @@
 #define GAME_TITLE      "GRAVITY LAB"
 
 /* Game constants */
-#define MAX_LEVELS      20          /* Maximum levels supported */
-#define NUM_IMPLEMENTED_LEVELS 5    /* Currently implemented */
+#define MAX_LEVELS      20
+#define NUM_IMPLEMENTED_LEVELS 5
 
 /* Physics tuning */
 #define PHYSICS_FPS     60
-#define PHYSICS_DRAG    245         /* Drag: 245/256 ≈ 0.957 */
-#define PHYSICS_THRUST  180         /* Thrust power */
-#define PHYSICS_BRAKE   100         /* Brake power */
-#define PHYSICS_ROTspd  3           /* Rotation speed (256-deg circle) */
-#define PHYSICS_MAXspd  (1 << 10)   /* Max speed: 4.0 in 8.8 fixed */
+#define PHYSICS_DRAG    245
+#define PHYSICS_THRUST  180
+#define PHYSICS_BRAKE   100
+#define PHYSICS_ROTspd  3
+#define PHYSICS_MAXspd  (1 << 10)
 
 /* Display constants */
-#define HUD_HEIGHT      16          /* Top HUD area in pixels */
-#define MSG_DURATION    120         /* Message display duration (frames) */
+#define HUD_HEIGHT      16
+#define MSG_DURATION    120
 
 /* Medal colors for text */
 #define MEDAL_TEXT_GOLD   7
@@ -55,6 +55,9 @@
  *  Includes — Game Logic
  * ============================================================ */
 #include "ship.h"
+/* Data includes BEFORE circuit (circuit.h forward-declares LevelData) */
+#include "levels.h"
+#include "medal_times.h"
 #include "circuit.h"
 #include "obstacle.h"
 #include "checkpoint.h"
@@ -65,12 +68,6 @@
 #include "hud.h"
 #include "game_state.h"
 #include "save.h"
-
-/* ============================================================
- *  Includes — Data
- * ============================================================ */
-#include "levels.h"
-#include "medal_times.h"
 
 /* ============================================================
  *  Includes — Assets

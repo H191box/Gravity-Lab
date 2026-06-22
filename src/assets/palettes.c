@@ -1,5 +1,4 @@
 #include "palettes.h"
-#include "gba_header.h"
 #include "dma.h"
 
 /* ============================================================

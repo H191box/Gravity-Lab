@@ -2,7 +2,6 @@
 #define SYSTEM_H
 
 #include "gba_types.h"
-#include "gba_header.h"
 
 /* System initialization */
 void sys_init(void);
@@ -19,7 +18,6 @@ void sys_set_default_palette(void);
 /* Register VBlank interrupt handler */
 void sys_install_vblank_handler(void);
 
-/* VBlank flag (set by interrupt) */
-extern volatile u16 vblank_flag;
+/* VBlank flag is declared in gba_types.h */
 
 #endif /* SYSTEM_H */

@@ -1,6 +1,5 @@
 #include "text_renderer.h"
 #include "bg_manager.h"
-#include "gba_header.h"
 #include "dma.h"
 #include "font.h"
 

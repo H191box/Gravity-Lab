@@ -1,5 +1,4 @@
 #include "sprites.h"
-#include "gba_header.h"
 #include "dma.h"
 
 /* ============================================================

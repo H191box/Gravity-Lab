@@ -1,5 +1,4 @@
 #include "dma.h"
-#include "gba_header.h"
 
 /* DMA register arrays for indexed access */
 static volatile u32 *const dma_src[4] = {

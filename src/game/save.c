@@ -1,5 +1,4 @@
 #include "save.h"
-#include "gba_header.h"
 #include "dma.h"
 
 /* SRAM write delay: must wait between writes */

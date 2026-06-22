@@ -1,5 +1,4 @@
 #include "timer.h"
-#include "gba_header.h"
 
 /* Timer data register addresses */
 static volatile u16 *const tm_data[4] = {
