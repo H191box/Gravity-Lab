@@ -25,11 +25,18 @@
 
 /* OBJ VRAM in 1D sprite mapping mode:
  * Tile index N maps to VRAM address 0x06000000 + N * 32 bytes.
- * BG CharBase 0 uses tiles 0-511 (0x00000-0x0FFFF = 64KB).
- * We place OBJ tiles starting at tile 512 to avoid overlap.
- * VRAM address = 0x06000000 + 512 * 32 = 0x06004000.
+ *
+ * VRAM safe zone for OBJ tiles: 0x06010000 onwards (tile index 2048+).
+ * This avoids all BG CharBases (0-3) and BG ScreenBases:
+ *   CharBase 0: 0x06000000 (BG tiles)
+ *   CharBase 1: 0x06004000 (Font data for text layer)
+ *   BG0 map:    0x06008000 (screenbase=16)
+ *   BG1 map:    0x0600C000 (screenbase=24)
+ *   BG2 map:    0x0600E000 (screenbase=28)
+ *   BG3 map:    0x0600F000 (screenbase=30)
+ *   OBJ tiles:  0x06010000 (tile 2048) ← SAFE
  */
-#define OBJ_VRAM_TILE_START  512
+#define OBJ_VRAM_TILE_START  2048
 #define OBJ_VRAM_BASE        ((u16 *)(0x06000000 + OBJ_VRAM_TILE_START * 32))
 
 /* Helper: set pixel in 4bpp sprite tile data */

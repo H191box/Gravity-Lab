@@ -7,13 +7,24 @@
  *  OBJ GameSprite Tile IDs
  *
  *  GBA 1D sprite mapping: tile index N → VRAM 0x06000000 + N*32
- *  BG CharBase 0 occupies tile indices 0-511 (VRAM 0x06000000-0x06003FFF).
- *  We place all OBJ tile data starting at tile index 512 (VRAM 0x06004000).
+ *
+ *  VRAM Layout (96KB = 0x06000000 - 0x06017FFF):
+ *    CharBase 0 (0x06000000): BG tile data (16KB)
+ *    CharBase 1 (0x06004000): Font data for BG3 text layer (16KB)
+ *    BG0 map    (0x06008000): screenbase=16 (8KB for 64x64)
+ *    BG1 map    (0x0600C000): screenbase=24 (8KB for 64x64)
+ *    BG2 map    (0x0600E000): screenbase=28 (2KB for 32x32)
+ *    BG3 map    (0x0600F000): screenbase=30 (2KB for 32x32)
+ *    OBJ tiles  (0x06010000): SAFE — beyond all BG maps
+ *
+ *  We place all OBJ tile data starting at tile index 2048 (VRAM 0x06010000).
+ *  Previous value of 512 (0x06004000) OVERLAPPED with CharBase 1, causing
+ *  font data to corrupt sprite graphics (and vice versa).
  *
  *  16x16 sprites = 4 tiles each, 8x8 sprites = 1 tile each.
  * ============================================================ */
 
-#define OBJ_TILE_BASE       512  /* First OBJ tile index */
+#define OBJ_TILE_BASE       2048  /* First OBJ tile index — safe VRAM at 0x06010000 */
 
 /* Ship frames (16x16 each = 4 tiles) */
 #define OBJ_SHIP_CENTER     (OBJ_TILE_BASE + 0)    /* Tiles 0-3 */
