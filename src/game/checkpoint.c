@@ -4,6 +4,7 @@
 #include "particle_system.h"
 #include "levels.h"
 #include "system.h"
+#include "math_util.h"
 
 /* Checkpoint data */
 static Checkpoint checkpoints[MAX_CHECKPOINTS];
