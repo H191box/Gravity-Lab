@@ -5,14 +5,14 @@
 
 /* Text color indices (in BG palette) */
 #define TEXT_COLOR_WHITE    1
-#define TEXT_COLOR_RED      6
-#define TEXT_COLOR_GREEN    8
-#define TEXT_COLOR_YELLOW   9
-#define TEXT_COLOR_CYAN     10
-#define TEXT_COLOR_GRAY     3
+#define TEXT_COLOR_RED      2
+#define TEXT_COLOR_GREEN    3
+#define TEXT_COLOR_YELLOW   4
+#define TEXT_COLOR_CYAN     5
+#define TEXT_COLOR_GRAY     6
 #define TEXT_COLOR_SILVER   6
-#define TEXT_COLOR_GOLD     12
-#define TEXT_COLOR_BRONZE   14
+#define TEXT_COLOR_GOLD     7
+#define TEXT_COLOR_BRONZE   8
 #define TEXT_COLOR_DARK     2
 
 /* Text layer (BG3 by default) */

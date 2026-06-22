@@ -37,7 +37,6 @@ void sys_init(void) {
         oam[i].attr0 = ATTR0_Y_MASK;  /* y = 160 (off-screen) + disable */
         oam[i].attr1 = 0;
         oam[i].attr2 = 0;
-        oam[i].padding = 0;
     }
 
     /* Clear VRAM (96KB) to 0 */

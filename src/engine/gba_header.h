@@ -174,7 +174,6 @@ typedef struct {
     u16 attr0;
     u16 attr1;
     u16 attr2;
-    u16 padding;
 } ObjAttr;
 
 /* OAM Affine parameter (8 bytes per matrix) */

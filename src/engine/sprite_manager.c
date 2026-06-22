@@ -75,7 +75,6 @@ void sprite_init(void) {
         oam_buffer[i].attr0 = ATTR0_Y_MASK;  /* y=160 (off-screen) */
         oam_buffer[i].attr1 = 0;
         oam_buffer[i].attr2 = 0;
-        oam_buffer[i].padding = 0;
     }
 
     /* Initialize affine matrices to identity */
@@ -87,8 +86,8 @@ void sprite_init(void) {
     }
 
     /* Copy OAM to hardware immediately */
-    /* Each ObjAttr is 4 halfwords (8 bytes): attr0, attr1, attr2, padding */
-    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 4);
+    /* Each ObjAttr is 3 halfwords (6 bytes): attr0, attr1, attr2 */
+    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 3);
 }
 
 /* -------------------------------------------------------
@@ -240,7 +239,6 @@ void sprite_update_all(void) {
             oam_buffer[i].attr0 = ATTR0_Y_MASK;  /* y=160, disabled */
             oam_buffer[i].attr1 = 0;
             oam_buffer[i].attr2 = 0;
-            oam_buffer[i].padding = 0;
             continue;
         }
 
@@ -252,12 +250,8 @@ void sprite_update_all(void) {
                 attr0 |= ATTR0_DOUBLE;  /* Double-size mode */
             }
         } else {
-            attr0 |= ATTR0_DISABLE;  /* Normal mode = !rot_scale, but bit 9 = double for affine.
-                                        For non-affine, just ensure rot_scale bit is 0. */
-            /* Actually, for non-affine, bit 9 should be 0. ATTR0_DISABLE is (1<<9).
-               We should NOT set ATTR0_DISABLE for visible sprites.
-               Let me fix: */
-            attr0 &= ~ATTR0_DISABLE;  /* Clear bit 9 for normal sprites */
+            /* Normal (non-affine) sprite: bit 9 must be 0 (not disabled) */
+            attr0 &= ~ATTR0_DISABLE;
         }
         attr0 |= ATTR0_COLOR_16;  /* 16-color (4bpp) sprites */
 
@@ -284,7 +278,6 @@ void sprite_update_all(void) {
         oam_buffer[i].attr0 = attr0;
         oam_buffer[i].attr1 = attr1;
         oam_buffer[i].attr2 = attr2;
-        oam_buffer[i].padding = 0;
     }
 
     /* Copy affine matrices and sprite attributes to OAM via DMA
@@ -292,8 +285,8 @@ void sprite_update_all(void) {
      *   - 32 affine matrices: 32 * 4 halfwords = 256 bytes (0x000-0x0FF)
      *   - 128 sprite attrs: 128 * 3 halfwords = 768 bytes (0x100-0x3FF)
      */
-    dma_memcpy16((void *)0x07000000, (const u16 *)oam_affine, 32 * 4);  /* 128 halfwords */
-    dma_memcpy16((void *)0x07000100, (const u16 *)oam_buffer, MAX_SPRITES * 4);  /* 512 halfwords */
+    dma_memcpy16((void *)0x07000000, (const u16 *)oam_affine, 32 * 4);  /* 128 halfwords = 256 bytes */
+    dma_memcpy16((void *)0x07000100, (const u16 *)oam_buffer, MAX_SPRITES * 3);  /* 384 halfwords = 768 bytes */
 }
 
 /* -------------------------------------------------------
@@ -306,9 +299,8 @@ void sprite_clear_all(void) {
         oam_buffer[i].attr0 = ATTR0_Y_MASK;
         oam_buffer[i].attr1 = 0;
         oam_buffer[i].attr2 = 0;
-        oam_buffer[i].padding = 0;
     }
-    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 4);
+    dma_memcpy16((void *)OAM_BASE, oam_buffer, MAX_SPRITES * 3);
 }
 
 /* -------------------------------------------------------

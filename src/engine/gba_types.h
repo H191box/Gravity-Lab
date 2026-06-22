@@ -290,7 +290,6 @@ typedef struct {
     u16 attr0;
     u16 attr1;
     u16 attr2;
-    u16 padding;
 } ObjAttr;
 
 typedef struct {
@@ -310,7 +309,7 @@ typedef struct {
 #define ATTR0_ROT_SCALE    (1 << 8)
 #endif
 #ifndef ATTR0_DOUBLE
-#define ATTR0_DOUBLE       ATTR0_ROTSCALE   /* same bit, different name */
+#define ATTR0_DOUBLE       ATTR0_DISABLED   /* bit 9: double-size for affine, disable for normal */
 #endif
 #ifndef ATTR0_DISABLE
 #define ATTR0_DISABLE      ATTR0_DISABLED   /* same bit, different name */
