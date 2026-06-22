@@ -2,6 +2,7 @@
 #define PARTICLE_SYSTEM_H
 
 #include "gba_types.h"
+#include "obj_tiles.h"
 
 /* Particle types */
 #define PARTICLE_EXHAUST       0  /* Ship engine exhaust */
