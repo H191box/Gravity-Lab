@@ -217,6 +217,62 @@ typedef s16 fixed;
 #define DSTAT_VCNT_IRQ (1 << 5)
 #endif
 
+/* ============================================================
+ *  DMA Control Flags (devkitPro uses different names)
+ *  devkitPro has DMA_ENABLE, DMA_16, DMA_32, DMA_REPEAT, DMA_SRC_INC,
+ *  DMA_SRC_DEC, DMA_SRC_FIXED, DMA_DST_INC, DMA_DST_DEC, DMA_DST_FIXED,
+ *  DMA_DST_RELOAD, DMA_IMMEDIATE, DMA_AT_VBLANK, DMA_AT_HBLANK.
+ *  We provide aliases matching our codebase convention.
+ * ============================================================ */
+#ifndef DMA_16BIT
+#define DMA_16BIT          (0 << 10)
+#endif
+#ifndef DMA_32BIT
+#define DMA_32BIT          (1 << 10)
+#endif
+#ifndef DMA_NOW
+#define DMA_NOW            (0 << 12)
+#endif
+#ifndef DMA_ENABLE
+#define DMA_ENABLE         (1 << 15)
+#endif
+#ifndef DMA_IRQ_DONE
+#define DMA_IRQ_DONE       (1 << 14)
+#endif
+#ifndef DMA_REPEAT
+#define DMA_REPEAT         (1 << 9)
+#endif
+#ifndef DMA_SRC_INC
+#define DMA_SRC_INC        (0 << 7)
+#endif
+#ifndef DMA_SRC_DEC
+#define DMA_SRC_DEC        (1 << 7)
+#endif
+#ifndef DMA_SRC_FIXED
+#define DMA_SRC_FIXED      (2 << 7)
+#endif
+#ifndef DMA_DST_INC
+#define DMA_DST_INC        (0 << 5)
+#endif
+#ifndef DMA_DST_DEC
+#define DMA_DST_DEC        (1 << 5)
+#endif
+#ifndef DMA_DST_FIXED
+#define DMA_DST_FIXED      (2 << 5)
+#endif
+#ifndef DMA_DST_RELOAD
+#define DMA_DST_RELOAD     (3 << 5)
+#endif
+#ifndef DMA_AT_VBLANK
+#define DMA_AT_VBLANK      (1 << 12)
+#endif
+#ifndef DMA_AT_HBLANK
+#define DMA_AT_HBLANK      (2 << 12)
+#endif
+#ifndef DMA_AT_REFRESH
+#define DMA_AT_REFRESH     (3 << 12)
+#endif
+
 /* ---- VBlank flag ---- */
 extern volatile u16 vblank_flag;
 
