@@ -2,6 +2,7 @@
 #define CIRCUIT_H
 
 #include "gba_types.h"
+#include "levels.h"
 
 /* Tile types for circuit maps */
 #define TILE_EMPTY           0
