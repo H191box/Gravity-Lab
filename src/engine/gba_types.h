@@ -273,6 +273,11 @@ typedef s16 fixed;
 #define DMA_AT_REFRESH     (3 << 12)
 #endif
 
+/* ---- Keypad aliases (devkitPro uses REG_KEYINPUT) ---- */
+#ifndef REG_KEYPAD
+#define REG_KEYPAD     REG_KEYINPUT
+#endif
+
 /* ---- VBlank flag ---- */
 extern volatile u16 vblank_flag;
 
