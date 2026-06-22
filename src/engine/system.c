@@ -7,24 +7,20 @@ volatile u16 vblank_flag = 0;
 static u32 frame_count = 0;
 
 /* -------------------------------------------------------
- *  VBlank Interrupt Service Routine
- *  Fires at the start of each vertical blanking period.
- *  We only set a flag here; the main loop checks it.
+ *  VBlank Interrupt Handler (called by libgba's IRQ dispatcher)
+ *  Must NOT be declared as ISR — libgba handles the ARM/Thumb
+ *  switch and interrupt acknowledgment for us.
  * ------------------------------------------------------- */
-void VBlankISR(void) __attribute__((interrupt("IRQ")));
-void VBlankISR(void) {
+static void VBlankHandler(void) {
     vblank_flag = 1;
     frame_count++;
-
-    /* Acknowledge the VBlank interrupt by writing to IF */
-    REG_IF = INT_VBLANK;
 }
 
 /* -------------------------------------------------------
  *  sys_init — One-time hardware setup
  *  - Mode 0: 4 text/tile background layers
  *  - Enable all 4 BGs, enable sprites, enable 1D sprite mapping
- *  - Set up VBlank interrupt
+ *  - Set up VBlank interrupt via libgba
  *  - Clear OAM
  * ------------------------------------------------------- */
 void sys_init(void) {
@@ -32,7 +28,7 @@ void sys_init(void) {
     REG_DISPCNT = DCNT_MODE0 | DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_BG3
                 | DCNT_OBJ | DCNT_OBJ_1D;
 
-    /* Install VBlank interrupt handler */
+    /* Install VBlank interrupt handler via libgba */
     sys_install_vblank_handler();
 
     /* Clear OAM — all sprites off-screen / disabled */
@@ -74,26 +70,15 @@ void sys_init(void) {
     REG_BG1CNT = 0;
     REG_BG2CNT = 0;
     REG_BG3CNT = 0;
-
-    /* Enable master interrupt */
-    REG_IME = 1;
 }
 
 /* -------------------------------------------------------
- *  sys_install_vblank_handler — Set up VBlank IRQ
+ *  sys_install_vblank_handler — Set up VBlank IRQ via libgba
+ *  Uses irqSet/irqEnable from libgba instead of manual ISR.
  * ------------------------------------------------------- */
 void sys_install_vblank_handler(void) {
-    /* Set VBlank ISR address at BIOS interrupt table */
-    *(void (**)(void))0x03000008 = VBlankISR;
-
-    /* Enable VBlank interrupt in DISPSTAT */
-    REG_DISPSTAT = DSTAT_VBL_IRQ;
-
-    /* Enable VBlank in IE register */
-    REG_IE = INT_VBLANK;
-
-    /* Enable interrupts globally */
-    REG_IME = 1;
+    irqSet(IRQ_VBLANK, VBlankHandler);
+    irqEnable(IRQ_VBLANK);
 }
 
 /* -------------------------------------------------------
@@ -102,7 +87,7 @@ void sys_install_vblank_handler(void) {
  * ------------------------------------------------------- */
 void sys_wait_vblank(void) {
     while (!vblank_flag) {
-        /* Spin — wait for VBlank ISR to set flag */
+        /* Spin — wait for VBlank handler to set flag */
     }
     vblank_flag = 0;
 }
