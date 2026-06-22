@@ -403,15 +403,17 @@ typedef struct {
 #define INT_KEYPAD       IRQ_KEYPAD
 #endif
 
-/* ---- OBJ Palette (devkitPro uses OBJPaletteSprite) ---- */
-#ifndef OBJ_PALETTE
-#define OBJ_PALETTE      ((u16 *)0x05000200)
+/* ---- OBJ Palette (devkitPro defines OBJ_PALETTE as a debug macro, we override) ---- */
+#ifdef OBJ_PALETTE
+#undef OBJ_PALETTE
 #endif
+#define OBJ_PALETTE      ((u16 *)0x05000200)
 
 /* ---- BG Palette ---- */
-#ifndef BG_PALETTE
-#define BG_PALETTE       ((u16 *)0x05000000)
+#ifdef BG_PALETTE
+#undef BG_PALETTE
 #endif
+#define BG_PALETTE       ((u16 *)0x05000000)
 
 /* ---- VBlank flag ---- */
 extern volatile u16 vblank_flag;
