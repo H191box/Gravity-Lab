@@ -3,17 +3,21 @@
 
 #include "gba_types.h"
 
-/* Text color indices (in BG palette) */
-#define TEXT_COLOR_WHITE    1
-#define TEXT_COLOR_RED      2
-#define TEXT_COLOR_GREEN    3
-#define TEXT_COLOR_YELLOW   4
-#define TEXT_COLOR_CYAN     5
-#define TEXT_COLOR_GRAY     6
-#define TEXT_COLOR_SILVER   6
-#define TEXT_COLOR_GOLD     7
-#define TEXT_COLOR_BRONZE   8
-#define TEXT_COLOR_DARK     2
+/* Text color indices — must match text_init() sub-palette layout.
+ * text_init() sets sub-palette N with colors[N]:
+ *   Sub-pal 0: White, Sub-pal 1: Red, Sub-pal 2: Green, ...
+ * So TEXT_COLOR_WHITE=0 means sub-palette 0 = white foreground.
+ */
+#define TEXT_COLOR_WHITE    0
+#define TEXT_COLOR_RED      1
+#define TEXT_COLOR_GREEN    2
+#define TEXT_COLOR_YELLOW   3
+#define TEXT_COLOR_CYAN     4
+#define TEXT_COLOR_GRAY     5
+#define TEXT_COLOR_SILVER   5
+#define TEXT_COLOR_GOLD     6
+#define TEXT_COLOR_BRONZE   7
+#define TEXT_COLOR_DARK     1
 
 /* Text layer (BG3 by default) */
 #define TEXT_BG_LAYER  BG_LAYER_UI

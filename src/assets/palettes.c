@@ -84,18 +84,6 @@ void palettes_load(void) {
         BG_PALETTE[i] = bg_pal_main[i];
     }
 
-    /* Sub-palettes 1-8: Text colors (index 0 = black, index 1 = color) */
-    for (i = 0; i < 8; i++) {
-        u16 base = (u16)((i + 1) * 16);
-        BG_PALETTE[base + 0] = 0x0000;            /* Background: black */
-        BG_PALETTE[base + 1] = text_colors[i];     /* Foreground: text color */
-    }
-
-    /* Fill remaining BG palette entries with black */
-    for (i = 16 * 9; i < 256; i++) {
-        BG_PALETTE[i] = 0x0000;
-    }
-
     /* --- OBJ Palette --- */
 
     /* Sub-palette 0: Main sprite colors */
