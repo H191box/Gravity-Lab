@@ -359,6 +359,60 @@ typedef struct {
 #define ATTR2_PRIORITY(n)  ((n) << 10)
 #endif
 
+/* ---- Interrupt flags (devkitPro uses IRQ_*) ---- */
+#ifndef INT_VBLANK
+#define INT_VBLANK       IRQ_VBLANK
+#endif
+#ifndef INT_HBLANK
+#define INT_HBLANK       IRQ_HBLANK
+#endif
+#ifndef INT_VCOUNT
+#define INT_VCOUNT       IRQ_VCOUNT
+#endif
+#ifndef INT_TIMER0
+#define INT_TIMER0       IRQ_TIMER0
+#endif
+#ifndef INT_TIMER1
+#define INT_TIMER1       IRQ_TIMER1
+#endif
+#ifndef INT_TIMER2
+#define INT_TIMER2       IRQ_TIMER2
+#endif
+#ifndef INT_TIMER3
+#define INT_TIMER3       IRQ_TIMER3
+#endif
+#ifndef INT_SERIAL
+#define INT_SERIAL       IRQ_SERIAL
+#endif
+#ifndef INT_DMA0
+#define INT_DMA0         IRQ_DMA0
+#endif
+#ifndef INT_DMA1
+#define INT_DMA1         IRQ_DMA1
+#endif
+#ifndef INT_DMA2
+#define INT_DMA2         IRQ_DMA2
+#endif
+#ifndef INT_DMA3
+#define INT_DMA3         IRQ_DMA3
+#endif
+#ifndef INT_JOYPAD
+#define INT_JOYPAD       IRQ_JOYPAD
+#endif
+#ifndef INT_KEYPAD
+#define INT_KEYPAD       IRQ_KEYPAD
+#endif
+
+/* ---- OBJ Palette (devkitPro uses OBJPaletteSprite) ---- */
+#ifndef OBJ_PALETTE
+#define OBJ_PALETTE      ((u16 *)0x05000200)
+#endif
+
+/* ---- BG Palette ---- */
+#ifndef BG_PALETTE
+#define BG_PALETTE       ((u16 *)0x05000000)
+#endif
+
 /* ---- VBlank flag ---- */
 extern volatile u16 vblank_flag;
 
