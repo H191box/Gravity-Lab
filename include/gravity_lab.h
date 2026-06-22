@@ -39,7 +39,6 @@
  *  Includes — Engine
  * ============================================================ */
 #include "gba_types.h"
-#include "gba_header.h"
 #include "system.h"
 #include "input.h"
 #include "dma.h"
