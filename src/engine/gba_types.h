@@ -11,6 +11,19 @@
 /* Use devkitPro's full GBA header */
 #include <gba.h>
 
+/* ---- Boolean constants (not defined in devkitPro's gba.h) ---- */
+#ifndef TRUE
+#define TRUE  1
+#endif
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+/* ---- VRAM base ---- */
+#ifndef VRAM_BASE
+#define VRAM_BASE  0x06000000
+#endif
+
 /* ---- Fixed-point type (NOT in devkitPro) ---- */
 typedef s16 fixed;
 

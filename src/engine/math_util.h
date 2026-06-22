@@ -40,7 +40,7 @@ static inline s32 clamp(s32 val, s32 lo, s32 hi) {
  * ------------------------------------------------------- */
 static inline s32 lerp(s32 a, s32 b, s32 t) {
     /* t in 0..256 */
-    return a + ((b - a) * t) >> 8;
+    return a + (((b - a) * t) >> 8);
 }
 
 /* Fixed-point lerp */

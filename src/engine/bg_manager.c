@@ -64,7 +64,7 @@ void bg_init(void) {
         .priority   = 0,
         .char_base  = 0,
         .screen_base = 16,  /* 0x06008000 */
-        .size       = BG_CNT_SCREENDIM_64x64,
+        .size       = 1,  /* 64x64 */
         .palette_256 = FALSE,
         .wrap       = TRUE,
         .enabled    = TRUE
@@ -76,7 +76,7 @@ void bg_init(void) {
         .priority   = 1,
         .char_base  = 0,  /* Share tiles with floor */
         .screen_base = 24,  /* 0x0600C000 */
-        .size       = BG_CNT_SCREENDIM_64x64,
+        .size       = 1,  /* 64x64 */
         .palette_256 = FALSE,
         .wrap       = TRUE,
         .enabled    = TRUE
@@ -88,7 +88,7 @@ void bg_init(void) {
         .priority   = 2,
         .char_base  = 0,
         .screen_base = 28,  /* 0x0600E000 */
-        .size       = BG_CNT_SCREENDIM_32x32,
+        .size       = 0,  /* 32x32 */
         .palette_256 = FALSE,
         .wrap       = FALSE,
         .enabled    = FALSE  /* Start disabled, enable when needed */
@@ -100,7 +100,7 @@ void bg_init(void) {
         .priority   = 3,
         .char_base  = 1,  /* Separate tile set for UI */
         .screen_base = 30,  /* 0x0600F000 */
-        .size       = BG_CNT_SCREENDIM_32x32,
+        .size       = 0,  /* 32x32 */
         .palette_256 = FALSE,
         .wrap       = FALSE,
         .enabled    = FALSE  /* Enable when UI is needed */
@@ -128,7 +128,7 @@ void bg_configure(int layer, const BGConfig *cfg) {
     cnt |= BG_CNT_PRIORITY(cfg->priority);
     cnt |= BG_CNT_CHARBASE(cfg->char_base);
     cnt |= BG_CNT_SCREENBASE(cfg->screen_base);
-    cnt |= cfg->size;
+    cnt |= (cfg->size << 14);  /* Size field: bits 14-15 */
 
     if (cfg->palette_256) cnt |= BG_CNT_256COLOR;
     if (cfg->wrap)         cnt |= BG_CNT_WRAP;
@@ -313,9 +313,9 @@ void bg_clear_map(int layer) {
      * 32x32 = 1024 entries (2KB)
      * 64x64 = 4096 entries (8KB, 4 screens of 32x32) */
     u32 size;
-    if (bg_configs[layer].size == BG_CNT_SCREENDIM_64x64 ||
-        bg_configs[layer].size == BG_CNT_SCREENDIM_32x64 ||
-        bg_configs[layer].size == BG_CNT_SCREENDIM_64x32) {
+    if (bg_configs[layer].size == 1 ||
+        bg_configs[layer].size == 2 ||
+        bg_configs[layer].size == 3) {
         size = 4096;
     } else {
         size = 1024;
