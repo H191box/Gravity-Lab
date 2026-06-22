@@ -1,5 +1,6 @@
 #include "sprite_manager.h"
 #include "dma.h"
+#include "fixed.h"
 
 /* Pool of 128 sprite slots */
 static GameSprite sprites[MAX_SPRITES];

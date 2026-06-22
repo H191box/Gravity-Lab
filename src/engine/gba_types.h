@@ -278,6 +278,87 @@ typedef s16 fixed;
 #define REG_KEYPAD     REG_KEYINPUT
 #endif
 
+/* ============================================================
+ *  OAM Types — Our game's OAM buffer format
+ *  devkitPro has OBJATTR (no .padding field) and obj_affine_t.
+ *  We define our own ObjAttr/ObjAffine since code accesses .padding.
+ * ============================================================ */
+typedef struct {
+    u16 attr0;
+    u16 attr1;
+    u16 attr2;
+    u16 padding;
+} ObjAttr;
+
+typedef struct {
+    u16 pa;
+    u16 pb;
+    u16 pc;
+    u16 pd;
+} ObjAffine;
+
+#define OAM_BASE       ((ObjAttr *)0x07000000)
+
+/* ---- OBJ Attribute 0 bits ---- */
+#ifndef ATTR0_Y_MASK
+#define ATTR0_Y_MASK       0x00FF
+#endif
+#ifndef ATTR0_ROT_SCALE
+#define ATTR0_ROT_SCALE    (1 << 8)
+#endif
+#ifndef ATTR0_DOUBLE
+#define ATTR0_DOUBLE       ATTR0_ROTSCALE   /* same bit, different name */
+#endif
+#ifndef ATTR0_DISABLE
+#define ATTR0_DISABLE      ATTR0_DISABLED   /* same bit, different name */
+#endif
+#ifndef ATTR0_MODE_NORMAL
+#define ATTR0_MODE_NORMAL  (0 << 10)
+#endif
+#ifndef ATTR0_MODE_TRANS
+#define ATTR0_MODE_TRANS   (1 << 10)
+#endif
+#ifndef ATTR0_MOSAIC
+#define ATTR0_MOSAIC       (1 << 12)
+#endif
+#ifndef ATTR0_COLOR_16
+#define ATTR0_COLOR_16     (0 << 13)
+#endif
+#ifndef ATTR0_COLOR_256
+#define ATTR0_COLOR_256    (1 << 13)
+#endif
+#ifndef ATTR0_SHAPE_SQUARE
+#define ATTR0_SHAPE_SQUARE  (0 << 14)
+#endif
+#ifndef ATTR0_SHAPE_WIDE
+#define ATTR0_SHAPE_WIDE    (1 << 14)
+#endif
+#ifndef ATTR0_SHAPE_TALL
+#define ATTR0_SHAPE_TALL    (2 << 14)
+#endif
+
+/* ---- OBJ Attribute 1 bits ---- */
+#ifndef ATTR1_X_MASK
+#define ATTR1_X_MASK       0x01FF
+#endif
+#ifndef ATTR1_HFLIP
+#define ATTR1_HFLIP        ATTR1_FLIP_X   /* devkitPro: ATTR1_FLIP_X */
+#endif
+#ifndef ATTR1_VFLIP
+#define ATTR1_VFLIP        ATTR1_FLIP_Y   /* devkitPro: ATTR1_FLIP_Y */
+#endif
+
+/* ---- OBJ Attribute 2 bits ---- */
+#ifndef ATTR2_ID_MASK
+#define ATTR2_ID_MASK      0x03FF
+#endif
+#ifndef ATTR2_PALETTE
+#define ATTR2_PALETTE(n)   ((n) << 12)
+#endif
+#ifndef ATTR2_PRIORITY
+#define ATTR2_PRIORITY(n)  ((n) << 10)
+#endif
+
 /* ---- VBlank flag ---- */
 extern volatile u16 vblank_flag;
 
