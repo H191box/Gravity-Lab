@@ -16,7 +16,7 @@
 
 /* --- Level 1: "First Launch" — Simple oval tutorial --- */
 /* 32x32 tile map */
-static const u8 level1_map[32*32] = {
+const u8 level1_map[32*32] = {
     /* Row 0-3: Top wall border */
     6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
     6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,
@@ -60,16 +60,16 @@ static const u8 level1_map[32*32] = {
 };
 
 /* Checkpoints for Level 1: 2 checkpoints forming a path */
-static const CheckpointDef level1_checkpoints[] = {
+const CheckpointDef level1_checkpoints[] = {
     { 128, 40, 32, 16 },   /* CP1: Top center */
     { 128, 216, 32, 16 },  /* CP2: Bottom center */
 };
 
 /* No obstacles in level 1 */
-static const ObstacleDef level1_obstacles[] = {};
+const ObstacleDef level1_obstacles[] = {};
 
 /* --- Level 2: "Narrow Pass" — Tight turns with walls --- */
-static const u8 level2_map[32*32] = {
+const u8 level2_map[32*32] = {
     /* Walls around perimeter with narrow corridors inside */
     6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
     6,1,1,1,1,6,6,6,6,1,1,1,1,1,6,6,6,6,1,1,1,1,1,6,6,6,6,1,1,1,1,6,
@@ -104,17 +104,17 @@ static const u8 level2_map[32*32] = {
     6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
 };
 
-static const CheckpointDef level2_checkpoints[] = {
+const CheckpointDef level2_checkpoints[] = {
     { 60, 60, 24, 24 },
     { 200, 60, 24, 24 },
     { 200, 200, 24, 24 },
     { 60, 200, 24, 24 },
 };
 
-static const ObstacleDef level2_obstacles[] = {};
+const ObstacleDef level2_obstacles[] = {};
 
 /* --- Level 3: "Boost Zone" — Boost pads + moving obstacles --- */
-static const u8 level3_map[32*32] = {
+const u8 level3_map[32*32] = {
     6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
     6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,
     6,1,1,1,1,1,1,1,1,1,1,1,1,14,14,14,14,14,1,1,1,1,1,1,1,1,1,1,1,1,1,6,
@@ -148,18 +148,18 @@ static const u8 level3_map[32*32] = {
     6,12,12,12,12,12,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,12,12,12,12,12,6,
 };
 
-static const CheckpointDef level3_checkpoints[] = {
+const CheckpointDef level3_checkpoints[] = {
     { 128, 44, 40, 24 },
     { 128, 212, 40, 24 },
 };
 
-static const ObstacleDef level3_obstacles[] = {
+const ObstacleDef level3_obstacles[] = {
     { OBS_TYPE_HBAR, OBS_MOVE_LINEAR, 0, 80, 128, 24, 8, 80, 2, 0 },
     { OBS_TYPE_VBAR, OBS_MOVE_LINEAR, 1, 180, 128, 8, 24, 60, 2, 0 },
 };
 
 /* --- Level 4: "Spinning Death" — Complex obstacles --- */
-static const u8 level4_map[32*32] = {
+const u8 level4_map[32*32] = {
     6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
     6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,
     6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,
@@ -193,14 +193,14 @@ static const u8 level4_map[32*32] = {
     6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,
 };
 
-static const CheckpointDef level4_checkpoints[] = {
+const CheckpointDef level4_checkpoints[] = {
     { 128, 44, 48, 24 },
     { 60, 128, 24, 48 },
     { 128, 212, 48, 24 },
     { 196, 128, 24, 48 },
 };
 
-static const ObstacleDef level4_obstacles[] = {
+const ObstacleDef level4_obstacles[] = {
     { OBS_TYPE_BLADE, OBS_MOVE_LINEAR, 0, 128, 100, 16, 16, 0, 3, 0 },
     { OBS_TYPE_BLADE, OBS_MOVE_LINEAR, 0, 128, 156, 16, 16, 0, 3, 128 },
     { OBS_TYPE_HBAR, OBS_MOVE_LINEAR, 0, 128, 80, 32, 8, 60, 2, 0 },
@@ -208,7 +208,7 @@ static const ObstacleDef level4_obstacles[] = {
 };
 
 /* --- Level 5: "The Gauntlet" — Everything combined --- */
-static const u8 level5_map[32*32] = {
+const u8 level5_map[32*32] = {
     6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
     6,1,1,1,1,1,1,1,1,1,6,6,6,1,1,1,1,1,1,1,1,1,1,6,6,6,1,1,1,1,1,6,
     6,1,1,1,1,1,1,1,1,1,6,6,6,14,14,14,14,14,1,1,1,1,1,6,6,6,1,1,1,1,1,6,
@@ -242,7 +242,7 @@ static const u8 level5_map[32*32] = {
     6,1,1,6,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,1,1,1,6,
 };
 
-static const CheckpointDef level5_checkpoints[] = {
+const CheckpointDef level5_checkpoints[] = {
     { 128, 36, 32, 24 },
     { 128, 84, 32, 24 },
     { 60, 152, 24, 32 },
@@ -250,7 +250,7 @@ static const CheckpointDef level5_checkpoints[] = {
     { 128, 220, 32, 24 },
 };
 
-static const ObstacleDef level5_obstacles[] = {
+const ObstacleDef level5_obstacles[] = {
     { OBS_TYPE_HBAR, OBS_MOVE_LINEAR, 0, 128, 60, 40, 8, 70, 3, 0 },
     { OBS_TYPE_VBAR, OBS_MOVE_LINEAR, 1, 80, 152, 8, 40, 50, 2, 0 },
     { OBS_TYPE_VBAR, OBS_MOVE_LINEAR, 1, 176, 152, 8, 40, 50, 2, 128 },

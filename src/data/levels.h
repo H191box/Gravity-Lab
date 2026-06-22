@@ -2,6 +2,7 @@
 #define LEVELS_H
 
 #include "gba_types.h"
+#include "obstacle.h"
 
 /* Obstacle definition (used in level data) */
 typedef struct {
