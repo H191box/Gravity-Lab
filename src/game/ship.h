@@ -3,6 +3,7 @@
 
 #include "gba_types.h"
 #include "fixed.h"
+#include "obj_tiles.h"
 
 /* Ship states */
 #define SHIP_NORMAL      0

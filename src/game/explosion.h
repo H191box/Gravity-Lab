@@ -2,6 +2,7 @@
 #define EXPLOSION_H
 
 #include "gba_types.h"
+#include "obj_tiles.h"
 
 /* Explosion stages */
 #define EXPLOSION_STAGE_FIREBALL  0   /* Frames 0-5 */

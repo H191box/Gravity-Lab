@@ -2,6 +2,7 @@
 #define OBSTACLE_H
 
 #include "gba_types.h"
+#include "obj_tiles.h"
 
 /* Obstacle types */
 #define OBS_TYPE_HBAR         0   /* Horizontal moving bar */

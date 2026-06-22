@@ -2,6 +2,7 @@
 #define MEDAL_SYSTEM_H
 
 #include "gba_types.h"
+#include "obj_tiles.h"
 
 /* Medal types */
 #define MEDAL_NONE   0
