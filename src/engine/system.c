@@ -77,6 +77,7 @@ void sys_init(void) {
  *  Uses irqSet/irqEnable from libgba instead of manual ISR.
  * ------------------------------------------------------- */
 void sys_install_vblank_handler(void) {
+    irqInit();  /* MUST call before irqSet — libgba requirement */
     irqSet(IRQ_VBLANK, VBlankHandler);
     irqEnable(IRQ_VBLANK);
 }
